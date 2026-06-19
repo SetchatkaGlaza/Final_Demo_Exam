@@ -1,4 +1,5 @@
-﻿using FinalDemoExam.Entity;
+using FinalDemoExam.Entity;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 
@@ -13,12 +14,15 @@ namespace FinalDemoExam
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            var user = App.DB.Users.FirstOrDefault(u => u.login == txtLogin.Text && u.password == txtPassword.Password);
+            var login = txtLogin.Text?.Trim();
+            var password = txtPassword.Password;
+
+            var user = App.DB.Users.Include("Roles").FirstOrDefault(u => u.login == login && u.password == password);
             if (user != null)
             {
                 App.UserId = user.id;
-                App.UserFullName = user.full_name;
-                App.UserRole = user.Roles.name;
+                App.UserFullName = user.full_name ?? "Пользователь";
+                App.UserRole = user.Roles?.name ?? string.Empty;
 
                 MainWindow main = new MainWindow();
                 main.Show();

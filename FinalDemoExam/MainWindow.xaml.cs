@@ -10,7 +10,9 @@ namespace FinalDemoExam
 {
     public partial class MainWindow : Window
     {
+        private readonly List<Products> emptyProducts = new List<Products>();
         private List<Products> products = new List<Products>();
+        private bool isWindowReady;
 
         public MainWindow()
         {
@@ -25,6 +27,7 @@ namespace FinalDemoExam
             btnOrders.Visibility = canSearch ? Visibility.Visible : Visibility.Collapsed;
             filtersPanel.Visibility = canSearch ? Visibility.Visible : Visibility.Collapsed;
 
+            isWindowReady = true;
             Refresh();
         }
 
@@ -39,9 +42,11 @@ namespace FinalDemoExam
                     .Include(p => p.Units)
                     .ToList();
             }
-            catch
+            catch (System.Exception ex)
             {
                 products = new List<Products>();
+                MessageBox.Show($"Не удалось загрузить товары из базы данных. Проверьте подключение и наличие базы FinalDemoExamKorepinVD.\n\n{ex.Message}",
+                    "Ошибка загрузки данных", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
 
             if (products == null) products = new List<Products>();
@@ -50,10 +55,14 @@ namespace FinalDemoExam
 
         private void ApplyFilters()
         {
-            // Самая главная проверка - если products пустой, показываем пустой список
+            if (!isWindowReady || lvProducts == null)
+            {
+                return;
+            }
+
             if (products == null || products.Count == 0)
             {
-                lvProducts.ItemsSource = new List<Products>();
+                lvProducts.ItemsSource = emptyProducts;
                 return;
             }
 
@@ -63,7 +72,7 @@ namespace FinalDemoExam
 
             if (canSearch)
             {
-                string searchText = txtSearch.Text?.ToLower();
+                string searchText = txtSearch?.Text?.Trim().ToLower();
                 if (!string.IsNullOrWhiteSpace(searchText))
                 {
                     result = result.Where(p =>
