@@ -1,5 +1,4 @@
-﻿using FinalDemoExam.Entity;
-using System;
+using FinalDemoExam.Entity;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -11,134 +10,82 @@ namespace FinalDemoExam
 {
     public partial class MainWindow : Window
     {
-        private List<Products> allProducts;
+        private List<Products> products = new List<Products>();
+        private bool CanManage => App.UserRole == "Администратор";
+        private bool CanSearch => App.UserRole == "Администратор" || App.UserRole == "Менеджер";
 
         public MainWindow()
         {
             InitializeComponent();
             txtUserFullName.Text = App.UserFullName;
-            SetPermissions();
+            btnAdd.Visibility = CanManage ? Visibility.Visible : Visibility.Collapsed;
+            btnOrders.Visibility = CanSearch ? Visibility.Visible : Visibility.Collapsed;
+            filtersPanel.Visibility = CanSearch ? Visibility.Visible : Visibility.Collapsed;
             Refresh();
-        }
-
-        private void SetPermissions()
-        {
-            if (App.UserRole == "Гость" || App.UserRole == "Авторизированный клиент")
-            {
-                btnAdd.Visibility = Visibility.Collapsed;
-                btnOrders.Visibility = Visibility.Collapsed;
-            }
-            else if (App.UserRole == "Менеджер")
-            {
-                btnAdd.Visibility = Visibility.Collapsed;
-                btnOrders.Visibility = Visibility.Visible;
-            }
-            else if (App.UserRole == "Администратор")
-            {
-                btnAdd.Visibility = Visibility.Visible;
-                btnOrders.Visibility = Visibility.Visible;
-            }
         }
 
         public void Refresh()
         {
-            allProducts = App.DB.Products.Include(p => p.Categories).Include(p => p.Manufacturers).Include(p => p.Suppliers).Include(p => p.Units).ToList();
+            products = App.DB.Products.Include(p => p.Categories).Include(p => p.Manufacturers).Include(p => p.Suppliers).Include(p => p.Units).ToList();
             ApplyFilters();
         }
 
         private void ApplyFilters()
         {
-            if (allProducts == null)
-            {
-                return;
-            }
-
-            var query = allProducts.AsEnumerable();
-
-            string search = txtSearch.Text?.ToLower();
-            if (!string.IsNullOrEmpty(search))
-            {
-                query = query.Where(p =>
-                    p.name != null && p.name.ToLower().Contains(search) ||
-                    p.description != null && p.description.ToLower().Contains(search) ||
-                    p.Categories != null && p.Categories.name != null && p.Categories.name.ToLower().Contains(search) ||
-                    p.Manufacturers != null && p.Manufacturers.name != null && p.Manufacturers.name.ToLower().Contains(search) ||
-                    p.Suppliers != null && p.Suppliers.name != null && p.Suppliers.name.ToLower().Contains(search) ||
-                    p.article != null && p.article.ToLower().Contains(search)
-                );
-            }
-
-            if (cmbDiscountFilter != null && cmbDiscountFilter.SelectedItem != null && cmbDiscountFilter.SelectedItem is ComboBoxItem discountItem)
-            {
-                string discountFilter = discountItem.Content.ToString();
-                if (discountFilter == "0-12,99%")
-                    query = query.Where(p => p.discount >= 0 && p.discount < 13);
-                else if (discountFilter == "13-16,99%")
-                    query = query.Where(p => p.discount >= 13 && p.discount < 17);
-                else if (discountFilter == "17% и более")
-                    query = query.Where(p => p.discount >= 17);
-            }
-
-            if (cmbSort != null && cmbSort.SelectedItem != null && cmbSort.SelectedItem is ComboBoxItem sortItem)
-            {
-                string sort = sortItem.Content.ToString();
-                if (sort == "Цена по возрастанию")
-                    query = query.OrderBy(p => p.price);
-                else if (sort == "Цена по убыванию")
-                    query = query.OrderByDescending(p => p.price);
-                else if (sort == "Количество по возрастанию")
-                    query = query.OrderBy(p => p.stock_quantity);
-                else if (sort == "Количество по убыванию")
-                    query = query.OrderByDescending(p => p.stock_quantity);
-            }
-
-            lvProducts.ItemsSource = query.ToList();
+            IEnumerable<Products> result = products;
+            if (CanSearch) result = Sort(Filter(Search(result)));
+            lvProducts.ItemsSource = result.ToList();
         }
 
-        private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
+        private IEnumerable<Products> Search(IEnumerable<Products> source)
         {
-            ApplyFilters();
+            string text = txtSearch.Text?.ToLower();
+            if (string.IsNullOrWhiteSpace(text)) return source;
+            return source.Where(p => (p.article + " " + p.name + " " + p.description + " " + p.Categories?.name + " " + p.Manufacturers?.name + " " + p.Suppliers?.name + " " + p.Units?.name).ToLower().Contains(text));
         }
 
-        private void cmbSort_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private IEnumerable<Products> Filter(IEnumerable<Products> source)
         {
-            ApplyFilters();
+            string value = ((ComboBoxItem)cmbDiscountFilter.SelectedItem)?.Content.ToString();
+            if (value == "0-12,99%") return source.Where(p => p.discount >= 0 && p.discount < 13);
+            if (value == "13-16,99%") return source.Where(p => p.discount >= 13 && p.discount < 17);
+            if (value == "17% и более") return source.Where(p => p.discount >= 17);
+            return source;
         }
 
-        private void cmbDiscountFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private IEnumerable<Products> Sort(IEnumerable<Products> source)
         {
-            ApplyFilters();
+            string value = ((ComboBoxItem)cmbSort.SelectedItem)?.Content.ToString();
+            if (value == "Цена по возрастанию") return source.OrderBy(p => p.price);
+            if (value == "Цена по убыванию") return source.OrderByDescending(p => p.price);
+            if (value == "Количество по возрастанию") return source.OrderBy(p => p.stock_quantity);
+            if (value == "Количество по убыванию") return source.OrderByDescending(p => p.stock_quantity);
+            return source;
         }
+
+        private void txtSearch_TextChanged(object sender, TextChangedEventArgs e) => ApplyFilters();
+        private void cmbSort_SelectionChanged(object sender, SelectionChangedEventArgs e) => ApplyFilters();
+        private void cmbDiscountFilter_SelectionChanged(object sender, SelectionChangedEventArgs e) => ApplyFilters();
 
         private void btnLogout_Click(object sender, RoutedEventArgs e)
         {
-            LoginWindow login = new LoginWindow();
-            login.Show();
+            new LoginWindow().Show();
             Close();
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            AddEditWindow addEdit = new AddEditWindow();
-            addEdit.ShowDialog();
+            new AddEditWindow().ShowDialog();
             Refresh();
         }
 
         private void lvProducts_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (App.UserRole != "Администратор") return;
-            if (lvProducts.SelectedItem is Products product)
-            {
-                AddEditWindow addEdit = new AddEditWindow(product);
-                addEdit.ShowDialog();
-                Refresh();
-            }
+            if (!CanManage || !(lvProducts.SelectedItem is Products product)) return;
+            new AddEditWindow(product).ShowDialog();
+            Refresh();
         }
 
-        private void btnOrders_Click(object sender, RoutedEventArgs e)
-        {
-            ListOrderWindow orders = new ListOrderWindow();
-            orders.ShowDialog();
-        }
+        private void btnOrders_Click(object sender, RoutedEventArgs e) => new ListOrderWindow().ShowDialog();
     }
 }

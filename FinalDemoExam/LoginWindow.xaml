@@ -6,7 +6,7 @@
         ResizeMode="NoResize"
         Background="#FFFFFF"
         Icon="/Image/icon.ico">
-    <Grid>
+    <Grid FontFamily="Times New Roman">
         <Grid.RowDefinitions>
             <RowDefinition Height="80"/>
             <RowDefinition Height="*"/>
