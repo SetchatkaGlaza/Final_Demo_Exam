@@ -95,62 +95,62 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Entity\Categories.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>edm.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\edm.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>edm.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\edm.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>edm.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\edm.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>edm.edmx</DependentUpon>
     </Compile>
     <Compile Include="Entity\Manufacturers.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\Model1.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\Model1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\Model1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.edmx</DependentUpon>
+      <DependentUpon>edm.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\OrderItems.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>edm.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Orders.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>edm.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\OrderStatuses.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>edm.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\PickupPoints.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>edm.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Products.cs">
+      <DependentUpon>edm.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Products.Extensions.cs" />
-    <Compile Include="Entity\Products.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entity\Roles.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>edm.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>edm.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\sp_helpdiagrams_Result.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>edm.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Suppliers.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>edm.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\sysdiagrams.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>edm.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Units.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>edm.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Users.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>edm.tt</DependentUpon>
     </Compile>
     <Compile Include="ListOrderWindow.xaml.cs">
       <DependentUpon>ListOrderWindow.xaml</DependentUpon>
@@ -181,12 +181,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="Entity\Model1.edmx">
+    <EntityDeploy Include="Entity\edm.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+      <LastGenOutput>edm.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Entity\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
+    <None Include="Entity\edm.edmx.diagram">
+      <DependentUpon>edm.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -213,17 +213,16 @@
     <Resource Include="Image\Icon.png" />
     <Resource Include="Image\picture.png" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="Entity\Model1.Context.tt">
+    <Content Include="Entity\edm.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
-      <DependentUpon>Model1.edmx</DependentUpon>
+      <DependentUpon>edm.edmx</DependentUpon>
+      <LastGenOutput>edm.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Entity\Model1.tt">
+    <Content Include="Entity\edm.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
+      <DependentUpon>edm.edmx</DependentUpon>
+      <LastGenOutput>edm.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

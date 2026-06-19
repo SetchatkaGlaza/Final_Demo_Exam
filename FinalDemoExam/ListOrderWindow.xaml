@@ -27,60 +27,35 @@
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Padding" Value="0"/>
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderBrush="LightGray" BorderThickness="0,0,0,1" Padding="10,5">
+                    <Border BorderBrush="LightGray" BorderThickness="1" Padding="5" Margin="2">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="80"/>
-                                <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition Width="120"/>
-                                <ColumnDefinition Width="120"/>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="150"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Column="0" Text="{Binding id}" FontWeight="Bold" FontSize="16" VerticalAlignment="Center"/>
+                            <Border Grid.Column="0" BorderBrush="Gray" BorderThickness="1" Margin="2" Padding="10">
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding id}" FontWeight="Bold" FontSize="16" Margin="0,0,0,5"/>
+                                    <TextBlock Text="{Binding OrderStatuses.name}" Margin="0,2,0,0"/>
+                                    <TextBlock Text="{Binding PickupPoints.address}" TextWrapping="Wrap" Margin="0,2,0,0"/>
+                                    <TextBlock Text="{Binding order_date, StringFormat={}{0:dd.MM.yyyy}}" Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </Border>
 
-                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                <ItemsControl ItemsSource="{Binding OrderItems}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock>
-                                                <TextBlock.Text>
-                                                    <MultiBinding StringFormat="{}{0} - {1} шт.">
-                                                        <Binding Path="Products.name"/>
-                                                        <Binding Path="quantity"/>
-                                                    </MultiBinding>
-                                                </TextBlock.Text>
-                                            </TextBlock>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </StackPanel>
-
-                            <TextBlock Grid.Column="2" Text="{Binding order_date, StringFormat={}{0:dd.MM.yyyy}}" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="3" Text="{Binding delivery_date, StringFormat={}{0:dd.MM.yyyy}}" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="4" Text="{Binding PickupPoints.address}" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                            <TextBlock Grid.Column="5" Text="{Binding Users.full_name}" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="6" Text="{Binding pickup_code}" VerticalAlignment="Center" FontWeight="Bold"/>
-
-                            <Border Grid.Column="7" Padding="5" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <TextBlock Text="{Binding OrderStatuses.name}" FontWeight="Bold" Foreground="White"/>
-                                <Border.Style>
-                                    <Style TargetType="Border">
-                                        <Setter Property="Background" Value="Green"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding OrderStatuses.name}" Value="Новый">
-                                                <Setter Property="Background" Value="Orange"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Border.Style>
+                            <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="2" Margin="2" Padding="5" VerticalAlignment="Stretch">
+                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock FontWeight="Bold" FontSize="18" HorizontalAlignment="Center" Margin="0,5,0,0">
+                                        <TextBlock.Text>
+                                            <Binding Path="delivery_date" StringFormat="{}{0:dd.MM.yyyy}"/>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </StackPanel>
                             </Border>
                         </Grid>
                     </Border>

@@ -55,97 +55,82 @@
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Border Background="{Binding RowBackground}" BorderBrush="LightGray" BorderThickness="0,0,0,1" Padding="5">
+                    <Border Background="{Binding RowBackground}" BorderBrush="LightGray" BorderThickness="1" Padding="5" Margin="2">
                         <Grid>
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="140"/>
+                                <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="120"/>
-                                <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <Image Grid.Column="0" Height="100" Width="100" Stretch="Uniform" Margin="5" Source="{Binding DisplayPhotoPath}"/>
+                            <!-- Левая часть: Фото -->
+                            <Border Grid.Column="0" BorderBrush="Gray" BorderThickness="1" Margin="2" Padding="2">
+                                <Image Height="120" Width="120" Stretch="Uniform" Margin="5" Source="{Binding DisplayPhotoPath}"/>
+                            </Border>
 
-                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="5">
-                                <TextBlock Text="{Binding name}" FontWeight="Bold" FontSize="16"/>
-                                <TextBlock Text="{Binding Categories.name}" Foreground="Gray"/>
-                                <TextBlock Text="{Binding description}" TextWrapping="Wrap"/>
-                                <TextBlock>
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="Производитель: {0}">
-                                            <Binding Path="Manufacturers.name"/>
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
-                                <TextBlock>
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="Поставщик: {0}">
-                                            <Binding Path="Suppliers.name"/>
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
-                            </StackPanel>
+                            <!-- Центральная часть: Данные товара -->
+                            <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="1" Margin="2" Padding="10">
+                                <StackPanel VerticalAlignment="Center">
+                                    <!-- Категория | Наименование (в одну строку) -->
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Categories.name}" FontWeight="Bold" FontSize="16"/>
+                                        <TextBlock Text=" | " FontWeight="Bold" FontSize="16"/>
+                                        <TextBlock Text="{Binding name}" FontWeight="Bold" FontSize="16" TextWrapping="Wrap"/>
+                                    </StackPanel>
 
-                            <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="5">
-                                <TextBlock Text="{Binding PriceText}" FontWeight="Bold" TextAlignment="Center">
-                                    <TextBlock.Style>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="Foreground" Value="Black"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding HasDiscount}" Value="True">
-                                                    <Setter Property="Foreground" Value="Red"/>
-                                                    <Setter Property="TextDecorations" Value="Strikethrough"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                            </StackPanel>
+                                    <!-- Описание -->
+                                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                        <TextBlock Text="Описание: " FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding description}" TextWrapping="Wrap"/>
+                                    </StackPanel>
 
-                            <StackPanel Grid.Column="3" VerticalAlignment="Center" Margin="5">
-                                <TextBlock Text="Цена со скидкой:" FontSize="11" Foreground="Gray"/>
-                                <TextBlock Text="{Binding FinalPriceText}" FontWeight="Bold" FontSize="16" Foreground="Black"/>
-                            </StackPanel>
+                                    <!-- Производитель -->
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Производитель: " FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding Manufacturers.name}" TextWrapping="Wrap"/>
+                                    </StackPanel>
 
-                            <StackPanel Grid.Column="4" VerticalAlignment="Center" Margin="5">
-                                <TextBlock Text="Скидка:" FontSize="11" Foreground="Gray"/>
-                                <TextBlock FontWeight="Bold" FontSize="16">
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0}%">
-                                            <Binding Path="discount"/>
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
-                            </StackPanel>
+                                    <!-- Поставщик -->
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Поставщик: " FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding Suppliers.name}" TextWrapping="Wrap"/>
+                                    </StackPanel>
 
-                            <StackPanel Grid.Column="5" VerticalAlignment="Center" Margin="5">
-                                <TextBlock Text="На складе:" FontSize="11" Foreground="Gray"/>
-                                <TextBlock FontWeight="Bold" FontSize="16">
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0} {1}">
-                                            <Binding Path="stock_quantity"/>
-                                            <Binding Path="Units.name"/>
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
-                            </StackPanel>
+                                    <!-- Цена -->
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Цена: " FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding PriceText}"/>
+                                    </StackPanel>
 
-                            <TextBlock Grid.Column="6" Text="Нет в наличии" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                       FontWeight="Bold" Foreground="White" Background="Gray" Padding="10,5">
-                                <TextBlock.Style>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding stock_quantity}" Value="0">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
+                                    <!-- Единица измерения -->
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Единица измерения: " FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding Units.name}"/>
+                                    </StackPanel>
+
+                                    <!-- Количество на складе -->
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Количество на складе: " FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding stock_quantity}"/>
+                                        <TextBlock Text=" "/>
+                                        <TextBlock Text="{Binding Units.name}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Правая часть: Скидка -->
+                            <Border Grid.Column="2" BorderBrush="Gray" BorderThickness="1" Margin="2" Padding="5" VerticalAlignment="Stretch">
+                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock Text="Скидка:" FontWeight="Bold" FontSize="14" HorizontalAlignment="Center"/>
+                                    <TextBlock FontWeight="Bold" FontSize="24" HorizontalAlignment="Center">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0}%">
+                                                <Binding Path="discount"/>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
                         </Grid>
                     </Border>
                 </DataTemplate>
