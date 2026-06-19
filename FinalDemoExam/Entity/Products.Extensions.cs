@@ -9,9 +9,14 @@ namespace FinalDemoExam.Entity
         {
             get
             {
-                if (!string.IsNullOrWhiteSpace(photo_path) && File.Exists(photo_path))
+                if (!string.IsNullOrWhiteSpace(photo_path))
                 {
-                    return photo_path;
+                    if (File.Exists(photo_path))
+                    {
+                        return photo_path;
+                    }
+
+                    return $"/Image/{Path.GetFileName(photo_path)}";
                 }
 
                 return "/Image/picture.png";

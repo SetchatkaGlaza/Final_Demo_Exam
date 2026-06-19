@@ -20,10 +20,29 @@ namespace FinalDemoExam
             InitializeComponent();
             product = selectedProduct ?? new Products();
             isEdit = selectedProduct != null;
-            cmbCategory.ItemsSource = App.DB.Categories.ToList();
-            cmbSupplier.ItemsSource = App.DB.Suppliers.ToList();
-            cmbUnit.ItemsSource = App.DB.Units.ToList();
-            if (isEdit) FillForm();
+            try
+            {
+                cmbCategory.ItemsSource = App.DB.Categories.ToList();
+                cmbSupplier.ItemsSource = App.DB.Suppliers.ToList();
+                cmbUnit.ItemsSource = App.DB.Units.ToList();
+            }
+            catch (Exception ex)
+            {
+                Warn("Не удалось загрузить справочники товара: " + ex.Message);
+                Close();
+                return;
+            }
+
+            if (isEdit)
+            {
+                FillForm();
+            }
+            else
+            {
+                txtArticle.Text = "Будет создан автоматически";
+                txtDiscount.Text = "0";
+                txtStock.Text = "0";
+            }
         }
 
         private void FillForm()
@@ -64,7 +83,12 @@ namespace FinalDemoExam
             product.category_id = (int)cmbCategory.SelectedValue;
             product.supplier_id = (int)cmbSupplier.SelectedValue;
             product.unit_id = (int)cmbUnit.SelectedValue;
-            product.manufacturer_id = GetManufacturerId(txtManufacturer.Text.Trim());
+            Manufacturers manufacturer = GetOrCreateManufacturer(txtManufacturer.Text.Trim());
+            product.Manufacturers = manufacturer;
+            if (manufacturer.id > 0)
+            {
+                product.manufacturer_id = manufacturer.id;
+            }
             product.price = price;
             product.stock_quantity = stock;
             product.discount = discount;
@@ -88,18 +112,18 @@ namespace FinalDemoExam
             if (cmbCategory.SelectedValue == null || cmbSupplier.SelectedValue == null || cmbUnit.SelectedValue == null) return Warn("Выберите категорию, поставщика и единицу измерения.");
             if (!decimal.TryParse(txtPrice.Text, out price) || price < 0) return Warn("Цена должна быть неотрицательным числом.");
             if (!int.TryParse(txtStock.Text, out stock) || stock < 0) return Warn("Количество должно быть неотрицательным целым числом.");
-            if (!decimal.TryParse(txtDiscount.Text, out discount) || discount < 0) return Warn("Скидка должна быть неотрицательным числом.");
+            if (!decimal.TryParse(txtDiscount.Text, out discount) || discount < 0 || discount > 100) return Warn("Скидка должна быть числом от 0 до 100.");
             return true;
         }
 
-        private int GetManufacturerId(string name)
+        private Manufacturers GetOrCreateManufacturer(string name)
         {
             var manufacturer = App.DB.Manufacturers.FirstOrDefault(m => m.name == name);
-            if (manufacturer != null) return manufacturer.id;
+            if (manufacturer != null) return manufacturer;
+
             manufacturer = new Manufacturers { name = name };
             App.DB.Manufacturers.Add(manufacturer);
-            App.DB.SaveChanges();
-            return manufacturer.id;
+            return manufacturer;
         }
 
         private string GetNextArticle()
