@@ -127,6 +127,7 @@
     <Compile Include="Entity\PickupPoints.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Products.Extensions.cs" />
     <Compile Include="Entity\Products.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

@@ -10,7 +10,7 @@
         Background="#FFFFFF"
         Icon="/Image/Icon.ico">
 
-    <Grid Margin="20">
+    <Grid FontFamily="Times New Roman" Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -56,7 +56,7 @@
                 <TextBlock Grid.Row="6" Grid.Column="0" Text="Товары:" VerticalAlignment="Top" Margin="0,10,0,0"/>
                 <DataGrid x:Name="dgOrderItems" Grid.Row="6" Grid.Column="1" Margin="5" AutoGenerateColumns="False" Height="200">
                     <DataGrid.Columns>
-                        <DataGridComboBoxColumn Header="Товар" DisplayMemberPath="name" SelectedValuePath="article"/>
+                        <DataGridComboBoxColumn x:Name="productColumn" Header="Товар" DisplayMemberPath="name" SelectedValuePath="article" SelectedValueBinding="{Binding product_article}"/>
                         <DataGridTextColumn Header="Количество" Binding="{Binding quantity}"/>
                     </DataGrid.Columns>
                 </DataGrid>
@@ -65,6 +65,7 @@
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
             <Button x:Name="btnSave" Content="Сохранить" Background="#00FA9A" Click="btnSave_Click"/>
+            <Button x:Name="btnDelete" Content="Удалить" Background="#7FFF00" Click="btnDelete_Click" Visibility="Collapsed"/>
             <Button x:Name="btnCancel" Content="Отмена" Background="#7FFF00" Click="btnCancel_Click"/>
         </StackPanel>
     </Grid>
