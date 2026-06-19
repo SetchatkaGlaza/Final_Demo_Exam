@@ -11,7 +11,7 @@
         Background="#FFFFFF"
         Icon="/Image/Icon.ico">
 
-    <Grid FontFamily="Times New Roman" Margin="20">
+    <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
