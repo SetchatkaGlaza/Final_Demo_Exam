@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d2731450aacf400186091d63df9ebfa6" Name="Diagram1">
+        <EntityTypeShape EntityType="KuchumovISP41Model.Kat" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="KuchumovISP41Model.PVZ" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="KuchumovISP41Model.Role" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="KuchumovISP41Model.sysdiagram" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KuchumovISP41Model.Tovar" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="KuchumovISP41Model.User" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="KuchumovISP41Model.Zakaz" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <AssociationConnector Association="KuchumovISP41Model.FK_Tovar_Kat" ManuallyRouted="false" />
+        <AssociationConnector Association="KuchumovISP41Model.FK_Zakaz_PVZ" ManuallyRouted="false" />
+        <AssociationConnector Association="KuchumovISP41Model.FK_User_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="KuchumovISP41Model.FK_Zakaz_Tovar" ManuallyRouted="false" />
+        <AssociationConnector Association="KuchumovISP41Model.FK_Zakaz_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

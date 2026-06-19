@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="18d124f19c5d40e8a68c718cb72af3ab" Name="Diagram1">
+        <EntityTypeShape EntityType="FinalDemoExamKorepinVDModel.Categories" Width="1.5" PointX="0.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinalDemoExamKorepinVDModel.Manufacturers" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinalDemoExamKorepinVDModel.OrderItems" Width="1.5" PointX="5.25" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinalDemoExamKorepinVDModel.Orders" Width="1.5" PointX="3" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinalDemoExamKorepinVDModel.OrderStatuses" Width="1.5" PointX="0.75" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinalDemoExamKorepinVDModel.PickupPoints" Width="1.5" PointX="0.75" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinalDemoExamKorepinVDModel.Products" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinalDemoExamKorepinVDModel.Roles" Width="1.5" PointX="1.5" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinalDemoExamKorepinVDModel.Suppliers" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinalDemoExamKorepinVDModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinalDemoExamKorepinVDModel.Units" Width="1.5" PointX="0.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinalDemoExamKorepinVDModel.Users" Width="1.5" PointX="0.75" PointY="17.625" IsExpanded="true" />
+        <AssociationConnector Association="FinalDemoExamKorepinVDModel.FK__Products__catego__6D0D32F4" ManuallyRouted="false" />
+        <AssociationConnector Association="FinalDemoExamKorepinVDModel.FK__Products__manufa__6C190EBB" ManuallyRouted="false" />
+        <AssociationConnector Association="FinalDemoExamKorepinVDModel.FK__OrderItem__order__7B5B524B" ManuallyRouted="false" />
+        <AssociationConnector Association="FinalDemoExamKorepinVDModel.FK__OrderItem__produ__7C4F7684" ManuallyRouted="false" />
+        <AssociationConnector Association="FinalDemoExamKorepinVDModel.FK__Orders__pickup_p__76969D2E" ManuallyRouted="false" />
+        <AssociationConnector Association="FinalDemoExamKorepinVDModel.FK__Orders__status_i__787EE5A0" ManuallyRouted="false" />
+        <AssociationConnector Association="FinalDemoExamKorepinVDModel.FK__Orders__user_id__778AC167" ManuallyRouted="false" />
+        <AssociationConnector Association="FinalDemoExamKorepinVDModel.FK__Products__suppli__6B24EA82" ManuallyRouted="false" />
+        <AssociationConnector Association="FinalDemoExamKorepinVDModel.FK__Products__unit_i__693CA210" ManuallyRouted="false" />
+        <AssociationConnector Association="FinalDemoExamKorepinVDModel.FK__Users__role_id__59063A47" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
