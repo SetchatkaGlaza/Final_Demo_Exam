@@ -46,6 +46,7 @@ namespace FinalDemoExam
                 products = new List<Products>();
                 MessageBox.Show("Не удалось загрузить товары. Проверьте подключение к БД.");
             }
+            ApplyFilters();
         }
 
         private void ApplyFilters()
