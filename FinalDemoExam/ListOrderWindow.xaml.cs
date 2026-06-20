@@ -14,7 +14,7 @@ namespace FinalDemoExam
             txtUserFullName.Text = App.UserFullName;
             if (App.UserRole == 1)
             {
-                btnAdd.Visibility = Visibility.Visible;
+                btnAddOrders.Visibility = Visibility.Visible;
             }
             Refresh();
         }
@@ -24,12 +24,12 @@ namespace FinalDemoExam
             lvOrders.ItemsSource = App.DB.Orders.ToList();
         }
 
-        private void btnBack_Click(object sender, RoutedEventArgs e)
+        private void btnExit_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
 
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        private void btnAddOrders_Click(object sender, RoutedEventArgs e)
         {
             AddEditOrderWindow addEdit = new AddEditOrderWindow();
             addEdit.ShowDialog();
@@ -41,10 +41,11 @@ namespace FinalDemoExam
             if (App.UserRole != 1) return;
             if (lvOrders.SelectedItem is Orders order)
             {
-                AddEditOrderWindow addEdit = new AddEditOrderWindow(order);
-                addEdit.ShowDialog();
+                AddEditOrderWindow addEditOrderWindow = new AddEditOrderWindow(order);
+                addEditOrderWindow.ShowDialog();
                 Refresh();
             }
         }
+
     }
 }
