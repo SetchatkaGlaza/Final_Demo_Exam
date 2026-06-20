@@ -14,34 +14,27 @@ namespace FinalDemoExam
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            var login = txtLogin.Text?.Trim();
-            var password = txtPassword.Password;
-
-            var user = App.DB.Users.Include("Roles").FirstOrDefault(u => u.login == login && u.password == password);
+            var user = App.DB.Users.FirstOrDefault(u => u.login == txtLogin.Text && u.password == txtPassword.Password);
             if (user != null)
             {
                 App.UserId = user.id;
-                App.UserFullName = user.full_name ?? "Пользователь";
-                App.UserRole = user.Roles?.name ?? string.Empty;
-
-                MainWindow main = new MainWindow();
-                main.Show();
+                App.UserFullName = user.full_name;
+                App.UserRole = user.role_id;
+                new MainWindow().Show();
                 Close();
             }
             else
             {
-                MessageBox.Show("Неверный логин или пароль!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Неверный логин или пароль");
             }
         }
 
-        private void btnGuest_Click(object sender, RoutedEventArgs e)
+        private void BtnGuest_Click(object sender, RoutedEventArgs e)
         {
             App.UserId = 0;
             App.UserFullName = "Гость";
-            App.UserRole = "Гость";
-
-            MainWindow main = new MainWindow();
-            main.Show();
+            App.UserRole = 3;
+            new MainWindow().Show();
             Close();
         }
     }

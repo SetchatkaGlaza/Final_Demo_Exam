@@ -19,8 +19,8 @@ namespace FinalDemoExam
             InitializeComponent();
             txtUserFullName.Text = App.UserFullName;
 
-            bool isAdmin = App.UserRole == "Администратор";
-            bool isManager = App.UserRole == "Менеджер";
+            bool isAdmin = App.UserRole == 1; // ID администратора
+            bool isManager = App.UserRole == 2;
             bool canSearch = isAdmin || isManager;
 
             btnAdd.Visibility = isAdmin ? Visibility.Visible : Visibility.Collapsed;
@@ -68,7 +68,7 @@ namespace FinalDemoExam
 
             IEnumerable<Products> result = products;
 
-            bool canSearch = App.UserRole == "Администратор" || App.UserRole == "Менеджер";
+            bool canSearch = App.UserRole == 1 || App.UserRole == 2;
 
             if (canSearch)
             {
@@ -124,7 +124,7 @@ namespace FinalDemoExam
 
         private void lvProducts_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (App.UserRole != "Администратор") return;
+            if (App.UserRole != 2) return;
             if (lvProducts.SelectedItem is Products product)
             {
                 new AddEditWindow(product).ShowDialog();

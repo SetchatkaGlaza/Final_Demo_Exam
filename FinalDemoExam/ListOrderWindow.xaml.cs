@@ -12,7 +12,7 @@ namespace FinalDemoExam
         {
             InitializeComponent();
             txtUserFullName.Text = App.UserFullName;
-            if (App.UserRole == "Администратор")
+            if (App.UserRole == 1)
             {
                 btnAdd.Visibility = Visibility.Visible;
             }
@@ -38,7 +38,7 @@ namespace FinalDemoExam
 
         private void lvOrders_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (App.UserRole != "Администратор") return;
+            if (App.UserRole != 1) return;
             if (lvOrders.SelectedItem is Orders order)
             {
                 AddEditOrderWindow addEdit = new AddEditOrderWindow(order);
